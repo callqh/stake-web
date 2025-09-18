@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    // 推荐的扩展（不包含AI相关扩展）
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-typescript-next"
+  ],
+  "unwantedRecommendations": [
+    // 不推荐的AI相关扩展
+    "github.copilot",
+    "github.copilot-chat",
+    "tabnine.tabnine-vscode",
+    "codeium.codeium",
+    "amazonwebservices.amazon-q-vscode",
+    "ms-toolsai.jupyter-ai"
+  ]
+}
