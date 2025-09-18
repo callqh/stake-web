@@ -65,7 +65,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         activeTab={activeTab}
         onTabChange={handleTabChange}
         showMobileMenu={true}
-        exteral={<ConnectButton accountStatus="avatar" />}
+        exteral={<ConnectButton accountStatus='avatar' />}
       />
       <motion.main
         initial={{ opacity: 0, y: 20 }}

@@ -5,32 +5,32 @@ import Layout from '@/components/Layout';
 import Provider from './provider';
 
 const geistSans = Geist({
-	variable: '--font-geist-sans',
-	subsets: ['latin'],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
-	subsets: ['latin'],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-	title: 'Stake',
-	description: 'Stake for you',
+  title: 'Stake',
+  description: 'Stake for you',
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<html lang='en'>
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased text-slate-300`}>
-				<Provider>
-					<Layout>{children}</Layout>
-				</Provider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang='en'>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased text-slate-300`}>
+        <Provider>
+          <Layout>{children}</Layout>
+        </Provider>
+      </body>
+    </html>
+  );
 }

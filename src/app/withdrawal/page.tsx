@@ -1,3 +1,3 @@
 export default () => {
-  return <div>Withdrawal</div>
-}
+  return <div>Withdrawal</div>;
+};

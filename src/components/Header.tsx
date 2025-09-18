@@ -17,7 +17,7 @@ export default function Header({
   onTabChange,
   showMobileMenu = true,
   className,
-  exteral
+  exteral,
 }: HeaderProps) {
   const pathname = usePathname();
 
@@ -102,9 +102,7 @@ export default function Header({
                   )}
                 </motion.button>
               ))}
-              <div className='flex items-center space-x-1 relative ml-6'>
-                {exteral}
-              </div>
+              <div className='flex items-center space-x-1 relative ml-6'>{exteral}</div>
             </div>
           </nav>
 
