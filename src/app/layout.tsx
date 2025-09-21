@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
+import '@/styles/globals.css';
 import Layout from '@/components/Layout';
+import { Toaster } from '@/components/ui/sonner';
 import Provider from './provider';
 
 const geistSans = Geist({
@@ -15,8 +16,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Stake',
-  description: 'Stake for you',
+  title: 'Stake - ETH Staking Platform',
+  description: 'Secure and efficient ETH staking platform with modern UI and seamless wallet integration',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
@@ -29,6 +35,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased text-slate-300`}>
         <Provider>
           <Layout>{children}</Layout>
+          <Toaster position='top-center' />
         </Provider>
       </body>
     </html>

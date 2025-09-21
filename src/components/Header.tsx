@@ -2,6 +2,7 @@
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { type ReactNode, useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { HeaderConfig, HeaderTab } from '@/types/header';
@@ -12,7 +13,6 @@ interface HeaderProps extends Partial<HeaderConfig> {
 }
 
 export default function Header({
-  title = 'Stake',
   tabs = [],
   onTabChange,
   showMobileMenu = true,
@@ -37,10 +37,14 @@ export default function Header({
   return (
     <motion.header
       className={cn(
-        'flex w-full bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50 sticky top-0 z-50 px-20',
+        'flex w-full border-b border-slate-700/50 sticky top-0 z-50 px-20',
         'shadow-lg shadow-slate-900/20',
         className,
       )}
+      whileHover={{
+        transition: { duration: 0.2, ease: 'easeIn' },
+        backdropFilter: 'blur(8px)',
+      }}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -54,9 +58,13 @@ export default function Header({
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <h1 className='text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent'>
-              {title}
-            </h1>
+            <Image 
+              src="/logo.svg" 
+              alt="Stake Logo" 
+              width={120}
+              height={40}
+              className="h-10 w-auto hover:scale-105 transition-transform duration-200"
+            />
           </motion.div>
 
           {/* Desktop Navigation */}

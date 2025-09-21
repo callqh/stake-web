@@ -72,7 +72,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className='w-[50%] relative z-10 container mx-auto px-4 py-8'
+        className='w-[50%] flex justify-center relative z-10 container mx-auto px-4 py-8'
       >
         {children}
       </motion.main>
