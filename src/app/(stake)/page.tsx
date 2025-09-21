@@ -60,7 +60,10 @@ export default () => {
         </motion.p>
       </motion.div>
 
-      <Card animationDelay={0.2} className='w-1xl mx-auto grid grid-cols-1 gap-16'>
+      <Card
+        animationDelay={0.2}
+        className='w-1xl mx-auto grid grid-cols-1 gap-16'
+      >
         <Card className='border-0 p-6'>
           <div className='flex items-center gap-4'>
             <div className='w-18 h-18 rounded-full mr-6 bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center'>
@@ -69,7 +72,10 @@ export default () => {
             <div>
               <p className='text-muted-foreground text-2xl'>Staked Amount</p>
               <p className='text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent'>
-                {stakedAmount ? formatEther(stakedAmount as bigint) : '0.000000'} ETH
+                {stakedAmount
+                  ? formatEther(stakedAmount as bigint)
+                  : '0.000000'}{' '}
+                ETH
               </p>
             </div>
           </div>

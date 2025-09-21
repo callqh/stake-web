@@ -67,7 +67,10 @@ export default () => {
   };
 
   const handleWithdraw = async () => {
-    if (!unStakeAmount || parseEther(unStakeAmount) > (withdrawAmount as [bigint, bigint])?.[0]) {
+    if (
+      !unStakeAmount ||
+      parseEther(unStakeAmount) > (withdrawAmount as [bigint, bigint])?.[0]
+    ) {
       return toast.error('Invalid amount');
     }
     await writeContract({
