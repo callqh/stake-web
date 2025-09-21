@@ -38,13 +38,9 @@ export default function Header({
     <motion.header
       className={cn(
         'flex w-full border-b border-slate-700/50 sticky top-0 z-50 px-20',
-        'shadow-lg shadow-slate-900/20',
+        'shadow-lg shadow-slate-900/20 backdrop-blur-xl',
         className,
       )}
-      whileHover={{
-        transition: { duration: 0.2, ease: 'easeIn' },
-        backdropFilter: 'blur(8px)',
-      }}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}

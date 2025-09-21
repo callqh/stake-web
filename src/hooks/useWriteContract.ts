@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import {
@@ -49,7 +50,9 @@ export const useWriteContract = ({
         break;
       }
       case 'error': {
-        toast.error('Error!');
+        toast.error('Error!', {
+          description: receipt.error?.message,
+        });
         setLoading(false);
         break;
       }

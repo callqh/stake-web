@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { useReadContract } from 'wagmi';
 import type { Address } from '@/types';
 import { contractConfig } from './useContract';
@@ -5,18 +6,21 @@ import { contractConfig } from './useContract';
 /**
  * get balance of staking
  */
-export const useStakingBalance = (address?: Address) => {
+export const useStakingBalance = (functionName: any, address: Address) => {
   const { data: pid } = useReadContract({
     ...contractConfig,
     functionName: 'ETH_PID',
   });
   const readContract = useReadContract({
     ...contractConfig,
-    functionName: 'stakingBalance',
-    args: [pid as bigint, address as Address],
+    functionName,
+    args: [pid as bigint, address],
     query: {
       enabled: !!address,
     },
   });
+  if (readContract.error) {
+    toast.error(readContract.error.message);
+  }
   return readContract;
 };

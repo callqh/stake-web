@@ -22,7 +22,10 @@ export default () => {
    * get balance of staking
    */
   const { data: stakedAmount, refetch: refetchStakingBalance } =
-    useStakingBalance(address);
+    useStakingBalance('stakingBalance', address as Address);
+  /**
+   * write contract and listening receipt
+   */
   const { writeContract, loading } = useWriteContract({
     successCallback: refetchStakingBalance,
   });
@@ -49,12 +52,15 @@ export default () => {
       className='w-full grid grid-cols-1 gap-6'
     >
       <motion.div className='grid grid-cols-1 gap-6'>
+        <motion.p className='text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4 text-center'>
+          Stake
+        </motion.p>
         <motion.p className='text-3xl font-bold text-center'>
           Stake ETH to earn tokens
         </motion.p>
       </motion.div>
 
-      <Card animationDelay={0.2} className='w-full grid grid-cols-1 gap-6'>
+      <Card animationDelay={0.2} className='w-1xl mx-auto grid grid-cols-1 gap-16'>
         <Card className='border-0 p-6'>
           <div className='flex items-center gap-4'>
             <div className='w-18 h-18 rounded-full mr-6 bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center'>
@@ -63,7 +69,7 @@ export default () => {
             <div>
               <p className='text-muted-foreground text-2xl'>Staked Amount</p>
               <p className='text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent'>
-                {stakedAmount ? formatEther(stakedAmount) : '0.000000'} ETH
+                {stakedAmount ? formatEther(stakedAmount as bigint) : '0.000000'} ETH
               </p>
             </div>
           </div>
@@ -87,15 +93,12 @@ export default () => {
         </div>
         <div className='flex justify-center'>
           <Button
+            loading={loading}
             onClick={handleStake}
             disabled={!isConnected || loading}
             className='w-full h-12 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
           >
-            {isConnected
-              ? loading
-                ? 'Processing...'
-                : 'Stake ETH'
-              : 'Connect Wallet'}
+            {isConnected ? 'Stake ETH' : 'Connect Wallet'}
           </Button>
         </div>
       </Card>
