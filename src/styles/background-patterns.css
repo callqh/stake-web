@@ -6,13 +6,13 @@
 }
 
 .bg-grid::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.05;
-  background-image: 
-    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0), 
+  background-image:
+    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0),
     linear-gradient(180deg, var(--sidebar-senconed) 1px, transparent 0);
   background-size: 24px 24px;
   z-index: -1;
@@ -26,13 +26,13 @@
 
 .tech-grid::before,
 .bg-tech-grid::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.05;
-  background-image: 
-    linear-gradient(90deg, #0ea5e9 1px, transparent 0), 
+  background-image:
+    linear-gradient(90deg, #0ea5e9 1px, transparent 0),
     linear-gradient(180deg, #0ea5e9 1px, transparent 0);
   background-size: 24px 24px;
   z-index: -1;
@@ -44,13 +44,13 @@
 }
 
 .bg-grid-sm::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.03;
-  background-image: 
-    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0), 
+  background-image:
+    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0),
     linear-gradient(180deg, var(--sidebar-senconed) 1px, transparent 0);
   background-size: 12px 12px;
   z-index: -1;
@@ -62,13 +62,13 @@
 }
 
 .bg-grid-lg::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.08;
-  background-image: 
-    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0), 
+  background-image:
+    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0),
     linear-gradient(180deg, var(--sidebar-senconed) 1px, transparent 0);
   background-size: 48px 48px;
   z-index: -1;
@@ -80,12 +80,16 @@
 }
 
 .bg-dots::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.06;
-  background-image: radial-gradient(circle, var(--sidebar-senconed) 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle,
+    var(--sidebar-senconed) 1px,
+    transparent 1px
+  );
   background-size: 20px 20px;
   z-index: -1;
 }
@@ -96,12 +100,16 @@
 }
 
 .bg-dots-sm::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.04;
-  background-image: radial-gradient(circle, var(--sidebar-senconed) 0.5px, transparent 0.5px);
+  background-image: radial-gradient(
+    circle,
+    var(--sidebar-senconed) 0.5px,
+    transparent 0.5px
+  );
   background-size: 12px 12px;
   z-index: -1;
 }
@@ -112,16 +120,30 @@
 }
 
 .bg-hexagon::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.05;
-  background-image: 
-    radial-gradient(circle at 25% 25%, transparent 20%, var(--sidebar-senconed) 21%, var(--sidebar-senconed) 22%, transparent 23%),
-    radial-gradient(circle at 75% 75%, transparent 20%, var(--sidebar-senconed) 21%, var(--sidebar-senconed) 22%, transparent 23%);
+  background-image:
+    radial-gradient(
+      circle at 25% 25%,
+      transparent 20%,
+      var(--sidebar-senconed) 21%,
+      var(--sidebar-senconed) 22%,
+      transparent 23%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      transparent 20%,
+      var(--sidebar-senconed) 21%,
+      var(--sidebar-senconed) 22%,
+      transparent 23%
+    );
   background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
+  background-position:
+    0 0,
+    20px 20px;
   z-index: -1;
 }
 
@@ -131,12 +153,12 @@
 }
 
 .bg-diagonal::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.04;
-  background-image: 
+  background-image:
     linear-gradient(45deg, var(--sidebar-senconed) 1px, transparent 1px),
     linear-gradient(-45deg, var(--sidebar-senconed) 1px, transparent 1px);
   background-size: 20px 20px;
@@ -149,13 +171,13 @@
 }
 
 .bg-grid-animated::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.05;
-  background-image: 
-    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0), 
+  background-image:
+    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0),
     linear-gradient(180deg, var(--sidebar-senconed) 1px, transparent 0);
   background-size: 24px 24px;
   animation: grid-move 20s linear infinite;
@@ -177,12 +199,12 @@
 }
 
 .bg-grid-pulse::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
-  background-image: 
-    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0), 
+  background-image:
+    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0),
     linear-gradient(180deg, var(--sidebar-senconed) 1px, transparent 0);
   background-size: 24px 24px;
   animation: grid-pulse 3s ease-in-out infinite;
@@ -190,7 +212,8 @@
 }
 
 @keyframes grid-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.03;
   }
   50% {
@@ -204,13 +227,13 @@
 }
 
 .bg-grid-gradient::before {
-  content: '';
+  content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.06;
-  background-image: 
-    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0), 
+  background-image:
+    linear-gradient(90deg, var(--sidebar-senconed) 1px, transparent 0),
     linear-gradient(180deg, var(--sidebar-senconed) 1px, transparent 0);
   background-size: 24px 24px;
   mask: radial-gradient(ellipse at center, black 40%, transparent 80%);
@@ -242,11 +265,11 @@
   .tech-grid::before {
     background-size: 16px 16px;
   }
-  
+
   .bg-grid-sm::before {
     background-size: 8px 8px;
   }
-  
+
   .bg-grid-lg::before {
     background-size: 32px 32px;
   }

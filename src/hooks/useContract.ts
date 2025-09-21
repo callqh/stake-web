@@ -7,7 +7,4 @@ export const contractConfig = {
   address: process.env.NEXT_PUBLIC_STAKE_ADDRESS as Address,
 };
 
-export const useContract = () => {
-
-
-};
+export const useContract = () => {};

@@ -17,7 +17,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Stake - ETH Staking Platform',
-  description: 'Secure and efficient ETH staking platform with modern UI and seamless wallet integration',
+  description:
+    'Secure and efficient ETH staking platform with modern UI and seamless wallet integration',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -32,7 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased text-slate-300`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased text-slate-300`}
+      >
         <Provider>
           <Layout>{children}</Layout>
           <Toaster position='top-center' />

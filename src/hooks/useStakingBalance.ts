@@ -18,5 +18,5 @@ export const useStakingBalance = (address?: Address) => {
       enabled: !!address,
     },
   });
-  return readContract
+  return readContract;
 };

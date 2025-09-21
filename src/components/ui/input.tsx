@@ -7,12 +7,12 @@ interface InputProps extends React.ComponentProps<'input'> {
 }
 function Input({ className, type, suffix, ...props }: InputProps) {
   return (
-    <motion.div className={
-      cn(
+    <motion.div
+      className={cn(
         'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-        'relative flex border-2 rounded-2xl border-[rgba(var(--sidebar-senconed-rgb),0.5)]'
-      )
-    }>
+        'relative flex border-2 rounded-2xl border-[rgba(var(--sidebar-senconed-rgb),0.5)]',
+      )}
+    >
       <input
         type={type}
         data-slot='input'

@@ -11,9 +11,8 @@ interface ICardProps extends PropsWithChildren {
 export const Card: FC<ICardProps> = ({
   children,
   className,
-  animationDelay = 0.5
+  animationDelay = 0.5,
 }) => {
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -23,7 +22,7 @@ export const Card: FC<ICardProps> = ({
         'border-[var(--sidebar-senconed)] w-full rounded-3xl border p-12 shadow-2xl',
         'hover-3d-tilt',
         'bg-grid-animated',
-        className
+        className,
       )}
     >
       {children}

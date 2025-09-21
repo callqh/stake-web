@@ -21,8 +21,11 @@ export default () => {
   /**
    * get balance of staking
    */
-  const { data: stakedAmount, refetch: refetchStakingBalance } = useStakingBalance(address);
-  const { writeContract, loading } = useWriteContract({ successCallback: refetchStakingBalance });
+  const { data: stakedAmount, refetch: refetchStakingBalance } =
+    useStakingBalance(address);
+  const { writeContract, loading } = useWriteContract({
+    successCallback: refetchStakingBalance,
+  });
   /**
    * handle stake click event
    */

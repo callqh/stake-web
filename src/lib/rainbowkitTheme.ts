@@ -40,7 +40,8 @@ myCustomTheme.colors.closeButtonBackground = '#334155'; // slate-700
 // 添加更多科技感的颜色配置
 myCustomTheme.shadows = {
   connectButton: '0 4px 12px rgba(6, 182, 212, 0.15)',
-  dialog: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(6, 182, 212, 0.1)',
+  dialog:
+    '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(6, 182, 212, 0.1)',
   profileDetailsAction: '0 2px 6px rgba(6, 182, 212, 0.1)',
   selectedOption: '0 2px 6px rgba(6, 182, 212, 0.2)',
   selectedWallet: '0 2px 6px rgba(6, 182, 212, 0.2)',

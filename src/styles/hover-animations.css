@@ -1,13 +1,11 @@
-
 .hover-glow-card {
   position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
-  
 }
 
 .hover-glow-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -21,7 +19,9 @@
     var(--sidebar-senconed) 50%,
     transparent 100%
   );
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   mask-composite: xor;
   -webkit-mask-composite: xor;
   opacity: 0;
@@ -35,7 +35,7 @@
 
 .hover-glow-card:hover {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 10px 25px -5px rgba(0, 0, 0, 0.3),
     0 20px 40px -10px rgba(0, 0, 0, 0.2),
     0 0 0 1px var(--sidebar-senconed),
@@ -51,7 +51,7 @@
 }
 
 .hover-gradient-border::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   padding: 1px;
@@ -66,7 +66,7 @@
 
 .hover-gradient-border:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 15px 35px rgba(0, 0, 0, 0.4),
     0 5px 15px rgba(0, 0, 0, 0.3),
     0 0 30px rgba(var(--sidebar-senconed-rgb, 101, 163, 213), 0.4);
@@ -79,7 +79,7 @@
 }
 
 .hover-pulse-glow::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: -2px;
   background: radial-gradient(
@@ -101,14 +101,15 @@
 .hover-pulse-glow:hover {
   transform: translateY(-4px);
   border-color: var(--sidebar-senconed);
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.3),
     0 0 0 1px var(--sidebar-senconed),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.6;
   }
@@ -128,7 +129,7 @@
 .hover-neon-border:hover {
   transform: translateY(-2px);
   border-color: var(--sidebar-senconed);
-  box-shadow: 
+  box-shadow:
     0 0 5px var(--sidebar-senconed),
     0 0 10px var(--sidebar-senconed),
     0 0 15px var(--sidebar-senconed),
@@ -145,7 +146,7 @@
 
 .hover-3d-tilt:hover {
   transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) translateY(-5px);
-  box-shadow: 
+  box-shadow:
     10px 20px 40px rgba(0, 0, 0, 0.4),
     0 0 0 1px var(--sidebar-senconed),
     0 0 20px rgba(var(--sidebar-senconed-rgb, 101, 163, 213), 0.3);

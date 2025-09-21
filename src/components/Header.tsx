@@ -1,8 +1,8 @@
 'use client';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { type ReactNode, useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { HeaderConfig, HeaderTab } from '@/types/header';
@@ -58,12 +58,12 @@ export default function Header({
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <Image 
-              src="/logo.svg" 
-              alt="Stake Logo" 
+            <Image
+              src='/logo.svg'
+              alt='Stake Logo'
               width={120}
               height={40}
-              className="h-10 w-auto hover:scale-105 transition-transform duration-200"
+              className='h-10 w-auto hover:scale-105 transition-transform duration-200'
             />
           </motion.div>
 
@@ -110,7 +110,9 @@ export default function Header({
                   )}
                 </motion.button>
               ))}
-              <div className='flex items-center space-x-1 relative ml-6'>{exteral}</div>
+              <div className='flex items-center space-x-1 relative ml-6'>
+                {exteral}
+              </div>
             </div>
           </nav>
 
