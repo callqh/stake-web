@@ -4,45 +4,59 @@ import { TrendingUp } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { formatEther, parseEther } from 'viem';
-import { useAccount, useBalance } from 'wagmi';
-import { stakeAbi } from '@/assets/abi';
+import { parseEther } from 'viem';
+import { useAccount, useBalance, useConfig } from 'wagmi';
+import { waitForTransactionReceipt } from 'wagmi/actions';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { useStakingBalance } from '@/hooks/useStakingBalance';
-import { useWriteContract } from '@/hooks/useWriteContract';
-import type { Address } from '@/types';
+import { useContract } from '@/hooks/useContract';
+import { usePool } from '@/hooks/usePool';
+import { formatEthFixed } from '@/lib/utils';
 
 export default () => {
   const [value, setValue] = useState<string>('');
   const { address, isConnected } = useAccount();
   const { data: balance } = useBalance({ address });
-  /**
-   * get balance of staking
-   */
-  const { data: stakedAmount, refetch: refetchStakingBalance } =
-    useStakingBalance('stakingBalance', address as Address);
-  /**
-   * write contract and listening receipt
-   */
-  const { writeContract, loading } = useWriteContract({
-    successCallback: refetchStakingBalance,
-  });
+  const contract = useContract();
+  const { poolData, fetchPool } = usePool();
+  const config = useConfig();
+  const [stakeLoading, setStakeLoading] = useState(false);
   /**
    * handle stake click event
    */
   const handleStake = async () => {
+    if (!value) {
+      toast('Please enter a value!');
+      return;
+    }
     if (balance && parseEther(value) > balance?.value) {
       toast('Current balance is not enough!');
       return;
     }
-    await writeContract({
-      abi: stakeAbi,
-      address: process.env.NEXT_PUBLIC_STAKE_ADDRESS as Address,
-      functionName: 'depositETH',
-      value: parseEther(value),
-    });
+    try {
+      setStakeLoading(true);
+      const res = await contract?.write.depositETH({
+        value: parseEther(value),
+      });
+      if (!res) {
+        return;
+      }
+      const receipt = await waitForTransactionReceipt(config, {
+        hash: res,
+      });
+      if (receipt?.status === 'success') {
+        toast.success('Stake success!', {
+          description: receipt.blockHash
+        });
+        // 重新获取质押数量
+        await fetchPool()
+      }
+    } catch (err) {
+      toast.error((err as Error).message);
+    } finally {
+      setStakeLoading(false);
+    }
   };
 
   return (
@@ -72,9 +86,7 @@ export default () => {
             <div>
               <p className='text-muted-foreground text-2xl'>Staked Amount</p>
               <p className='text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent'>
-                {stakedAmount
-                  ? formatEther(stakedAmount as bigint)
-                  : '0.000000'}{' '}
+                {formatEthFixed(poolData.stTokenAmount)}
                 ETH
               </p>
             </div>
@@ -94,14 +106,14 @@ export default () => {
             }
           />
           <p className='text-muted-foreground mt-6'>
-            Available: {balance?.formatted} {balance?.symbol}
+            Available: {formatEthFixed(balance?.value)} {balance?.symbol}
           </p>
         </div>
         <div className='flex justify-center'>
           <Button
-            loading={loading}
+            loading={stakeLoading}
             onClick={handleStake}
-            disabled={!isConnected || loading}
+            disabled={!isConnected || stakeLoading}
             className='w-full h-12 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
           >
             {isConnected ? 'Stake ETH' : 'Connect Wallet'}

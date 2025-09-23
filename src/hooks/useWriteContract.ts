@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import {

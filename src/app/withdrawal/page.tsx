@@ -2,28 +2,31 @@
 import { motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
-import { formatEther, parseEther } from 'viem';
-import { useAccount } from 'wagmi';
+import { type Address, formatEther, parseEther } from 'viem';
+import { useAccount, useConfig } from 'wagmi';
+import { waitForTransactionReceipt } from 'wagmi/actions';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { contractConfig } from '@/hooks/useContract';
+import { useContract } from '@/hooks/useContract';
 import { useStakingBalance } from '@/hooks/useStakingBalance';
-import { useWriteContract } from '@/hooks/useWriteContract';
-import type { Address } from '@/types';
+import { useWidthdrawal } from '@/hooks/useWithdrawal';
+import { formatEthFixed, PID } from '@/lib/utils';
 
 export default () => {
   const [unStakeAmount, setUnStakeAmount] = useState<string>('');
-  const { address, isConnected } = useAccount();
-  const { data: stakeAmount } = useStakingBalance(
-    'stakingBalance',
-    address as Address,
-  );
-  const { data: withdrawAmount } = useStakingBalance(
-    'withdrawAmount',
-    address as Address,
-  );
-  const { writeContract, loading: unStakeLoading } = useWriteContract({});
+  const [unStakeLoading, setUnStakeLoading] = useState(false);
+  const [withdrawLoading, setWithdrawLoading] = useState(false);
+  const { data: withdrawal, fetchWidthdrawal } = useWidthdrawal();
+  const { data: stakeBalance, refetch: fetchStakedBalance } = useStakingBalance();
+  const { isConnected } = useAccount();
+  const contract = useContract();
+  const config = useConfig();
+
+  const canWithdraw = useMemo(() => {
+    return Number(withdrawal.withdrawableAmount) > 0 && isConnected;
+  }, [withdrawal, isConnected]);
+
   /**
    * amount list
    */
@@ -31,53 +34,72 @@ export default () => {
     () => [
       {
         name: 'Staked Amount',
-        value: stakeAmount && formatEther(stakeAmount as bigint),
+        value: stakeBalance,
       },
       {
         name: 'Avaliable to Withdraw',
-        value:
-          withdrawAmount &&
-          formatEther((withdrawAmount as [bigint, bigint])?.[0]),
+        value: withdrawal.withdrawableAmount,
       },
       {
         name: 'Pending Withdrawn',
-        value:
-          withdrawAmount &&
-          formatEther((withdrawAmount as [bigint, bigint])?.[1]),
+        value: withdrawal.withdrawPending,
       },
     ],
-    [stakeAmount, withdrawAmount],
+    [withdrawal, stakeBalance],
   );
 
   /**
    * handle unstake event
    */
   const handleUnstake = async () => {
-    if (
-      !unStakeAmount ||
-      parseEther(unStakeAmount) > (withdrawAmount as [bigint, bigint])?.[0]
-    ) {
+    if (!stakeBalance || !unStakeAmount) return toast.error('unstake amount is required')
+    if (parseFloat(unStakeAmount) > parseFloat(formatEther(stakeBalance))) {
       return toast.error('Invalid amount');
     }
-    await writeContract({
-      ...contractConfig,
-      functionName: 'unstake',
-      args: [BigInt(0), parseEther(unStakeAmount)],
-    });
+    try {
+      setUnStakeLoading(true)
+      const res = await contract?.write.unstake([
+        PID,
+        parseEther(unStakeAmount),
+      ]);
+      if (!res) return;
+      const receipt = await waitForTransactionReceipt(config, {
+        hash: res as Address,
+      });
+      if (receipt.status === 'success') {
+        toast.success('Unstake success!', {
+          description: receipt.blockHash,
+        });
+      }
+    } catch (err) {
+      toast.error((err as Error).message);
+    } finally {
+      setUnStakeLoading(false);
+    }
   };
 
   const handleWithdraw = async () => {
-    if (
-      !unStakeAmount ||
-      parseEther(unStakeAmount) > (withdrawAmount as [bigint, bigint])?.[0]
-    ) {
-      return toast.error('Invalid amount');
+    if (!canWithdraw) {
+      return toast.error('not withdrawable');
     }
-    await writeContract({
-      ...contractConfig,
-      functionName: 'withdraw',
-      args: [BigInt(0)],
-    });
+    try {
+      setWithdrawLoading(true);
+      const hash = await contract?.write.withdraw([PID])
+      if (!hash) return;
+      const receipt = await waitForTransactionReceipt(config, {
+        hash: hash as Address,
+      })
+      if (receipt.status === 'success') {
+        toast.success('Withdraw success!', {
+          description: receipt.blockHash,
+        });
+        await Promise.all([fetchStakedBalance(), fetchWidthdrawal()])
+      }
+    } catch (error) {
+      toast.error((error as Error).message);
+    } finally {
+      setWithdrawLoading(false)
+    }
   };
 
   return (
@@ -94,16 +116,16 @@ export default () => {
           Unstake and withdraw your ETH
         </motion.p>
       </motion.div>
-      <Card className='max-w-[70%] mx-auto grid grid-cols-1 gap-6'>
-        <div className='grid grid-cols-3 gap-3'>
+      <Card className='mx-auto grid grid-cols-1 gap-6'>
+        <div className='grid grid-cols-3 gap-2'>
           {amoutList.map((item) => (
-            <Card className='bg-white  p-6' key={item.name}>
+            <Card className='bg-white p-3' key={item.name}>
               <div className='grid grid-rows-2 gap-2'>
                 <p className='text-accent-foreground text-nowrap'>
                   {item.name}
                 </p>
                 <p className='text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent'>
-                  {item.value || '0.000000'} ETH
+                  {formatEthFixed(item.value)} ETH
                 </p>
               </div>
             </Card>
@@ -128,6 +150,7 @@ export default () => {
         <Button
           onClick={handleUnstake}
           loading={unStakeLoading}
+          disabled={!isConnected || unStakeLoading}
           className='w-full h-12 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
         >
           Unstake
@@ -138,9 +161,7 @@ export default () => {
           <div>
             <p className='text-accent-foreground'>Ready to Withdraw</p>
             <p className='text-2xl  font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent'>
-              {withdrawAmount
-                ? formatEther((withdrawAmount as [bigint, bigint])?.[0])
-                : '0.000000'}{' '}
+              {formatEthFixed(withdrawal.withdrawableAmount)}
               ETH
             </p>
           </div>
@@ -152,6 +173,8 @@ export default () => {
           After unstaking, you need to wait 20 minutes to withdraw.
         </p>
         <Button
+          loading={withdrawLoading}
+          disabled={!canWithdraw || withdrawLoading}
           onClick={handleWithdraw}
           className='w-full h-12 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700'
         >
