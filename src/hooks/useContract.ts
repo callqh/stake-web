@@ -13,20 +13,17 @@ export const useContract = () => {
   const client = useClient();
   const { data: walletClient } = useWalletClient();
 
-  return useMemo(
-    () => {
-      if (!client || !walletClient) {
-        return null;
-      }
-      return getContract({
-        abi: stakeAbi,
-        address: process.env.NEXT_PUBLIC_STAKE_ADDRESS as Address,
-        client: {
-          public: client!,
-          wallet: walletClient,
-        },
-      })
-    },
-    [client, walletClient],
-  );
+  return useMemo(() => {
+    if (!client || !walletClient) {
+      return null;
+    }
+    return getContract({
+      abi: stakeAbi,
+      address: process.env.NEXT_PUBLIC_STAKE_ADDRESS as Address,
+      client: {
+        public: client!,
+        wallet: walletClient,
+      },
+    });
+  }, [client, walletClient]);
 };

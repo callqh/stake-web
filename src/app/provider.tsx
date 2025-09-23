@@ -10,7 +10,7 @@ const config = getDefaultConfig({
   appName: 'Stake',
   projectId: 'liuqh-stake',
   chains: [sepolia],
-  ssr: true
+  ssr: true,
 });
 
 const queryClient = new QueryClient();

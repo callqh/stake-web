@@ -13,7 +13,7 @@ const DEFAULT_WIDTHDRAWAL = {
   requestAmount: BigInt(0),
   withdrawableAmount: BigInt(0),
   withdrawPending: BigInt(0),
-}
+};
 
 export const useWidthdrawal = () => {
   const contract = useContract();
@@ -23,20 +23,21 @@ export const useWidthdrawal = () => {
   const fetchWidthdrawal = async () => {
     try {
       if (!contract || !address) return;
-      const [requestAmount, withdrawableAmount] = await contract.read.withdrawAmount([PID, address as Address]);
+      const [requestAmount, withdrawableAmount] =
+        await contract.read.withdrawAmount([PID, address as Address]);
       setData({
         requestAmount: requestAmount || BigInt(0),
         withdrawableAmount: withdrawableAmount || BigInt(0),
         withdrawPending: requestAmount - withdrawableAmount || BigInt(0),
-      })
+      });
     } catch (err) {
-      console.log('fetch withdrawal error', err)
+      console.log('fetch withdrawal error', err);
     }
   };
 
   useEffect(() => {
     fetchWidthdrawal();
-  }, [contract, address])
+  }, [contract, address]);
 
   return { data, fetchWidthdrawal };
 };

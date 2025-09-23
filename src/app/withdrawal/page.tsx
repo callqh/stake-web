@@ -18,7 +18,8 @@ export default () => {
   const [unStakeLoading, setUnStakeLoading] = useState(false);
   const [withdrawLoading, setWithdrawLoading] = useState(false);
   const { data: withdrawal, fetchWidthdrawal } = useWidthdrawal();
-  const { data: stakeBalance, refetch: fetchStakedBalance } = useStakingBalance();
+  const { data: stakeBalance, refetch: fetchStakedBalance } =
+    useStakingBalance();
   const { isConnected } = useAccount();
   const contract = useContract();
   const config = useConfig();
@@ -52,12 +53,13 @@ export default () => {
    * handle unstake event
    */
   const handleUnstake = async () => {
-    if (!stakeBalance || !unStakeAmount) return toast.error('unstake amount is required')
+    if (!stakeBalance || !unStakeAmount)
+      return toast.error('unstake amount is required');
     if (parseFloat(unStakeAmount) > parseFloat(formatEther(stakeBalance))) {
       return toast.error('Invalid amount');
     }
     try {
-      setUnStakeLoading(true)
+      setUnStakeLoading(true);
       const res = await contract?.write.unstake([
         PID,
         parseEther(unStakeAmount),
@@ -84,21 +86,21 @@ export default () => {
     }
     try {
       setWithdrawLoading(true);
-      const hash = await contract?.write.withdraw([PID])
+      const hash = await contract?.write.withdraw([PID]);
       if (!hash) return;
       const receipt = await waitForTransactionReceipt(config, {
         hash: hash as Address,
-      })
+      });
       if (receipt.status === 'success') {
         toast.success('Withdraw success!', {
           description: receipt.blockHash,
         });
-        await Promise.all([fetchStakedBalance(), fetchWidthdrawal()])
+        await Promise.all([fetchStakedBalance(), fetchWidthdrawal()]);
       }
     } catch (error) {
       toast.error((error as Error).message);
     } finally {
-      setWithdrawLoading(false)
+      setWithdrawLoading(false);
     }
   };
 

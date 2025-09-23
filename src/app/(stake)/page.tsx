@@ -47,10 +47,10 @@ export default () => {
       });
       if (receipt?.status === 'success') {
         toast.success('Stake success!', {
-          description: receipt.blockHash
+          description: receipt.blockHash,
         });
         // 重新获取质押数量
-        await fetchPool()
+        await fetchPool();
       }
     } catch (err) {
       toast.error((err as Error).message);
