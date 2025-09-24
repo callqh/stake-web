@@ -27,7 +27,10 @@ export default () => {
   const [stakeLoading, setStakeLoading] = useState(false);
   const { userData, fetchUserData } = useUserData();
 
-  const canClaim = useMemo(() => (parseFloat(formatEther(userData.pendingMetaNode)) > 0 && isConnected), [userData, isConnected])
+  const canClaim = useMemo(
+    () => parseFloat(formatEther(userData.pendingMetaNode)) > 0 && isConnected,
+    [userData, isConnected],
+  );
   /**
    * handle stake click event
    */
@@ -68,7 +71,7 @@ export default () => {
 
   const handleClaim = async () => {
     try {
-      setClaimLoading(true)
+      setClaimLoading(true);
       const hash = await contract?.write.claim([PID]);
       if (!hash) return;
       const receipt = await waitForTransactionReceipt(config, {
@@ -86,7 +89,7 @@ export default () => {
     } finally {
       setClaimLoading(false);
     }
-  }
+  };
 
   return (
     <motion.div
@@ -198,7 +201,8 @@ export default () => {
                 loading={claimLoading}
                 onClick={handleClaim}
                 disabled={!canClaim}
-                className='w-full h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'>
+                className='w-full h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
+              >
                 <Gift className='w-6 h-6 sm:w-7 sm:h-7' />
                 <span>Claim Rewards</span>
               </Button>

@@ -68,7 +68,7 @@ export default () => {
       if (!res) return;
       const receipt = await waitForTransactionReceipt(config, {
         hash: res as Address,
-        chainId
+        chainId,
       });
       if (receipt.status === 'success') {
         toast.success('Unstake success!', {
@@ -92,7 +92,7 @@ export default () => {
       if (!hash) return;
       const receipt = await waitForTransactionReceipt(config, {
         hash: hash as Address,
-        chainId
+        chainId,
       });
       if (receipt.status === 'success') {
         toast.success('Withdraw success!', {
