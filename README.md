@@ -1,7 +1,11 @@
 ## Issue
 1. 为什么withdraw的金额一直是0？
 2. 质押的原理是什么？把钱借给合约账户，然后合约账户去做投资之类的？
+  - 产生的rewards是哪里来的？
+  - metanode的代币不能给sepolia?
 3. pid是怎么来的？ /Users/liuqh/lqh/stake-web/src/hooks/useStakingBalance.ts 中通过合约的ETH_PID方法获取pid，这种方法是对的吗
+  - PID在合约里就是写死的bigint(0)
+4. 有时候获取余额的时候会超时或者失败，这时候就需要重试的机制，这也是源码中实现retryWithDelay的作用
 
 
 ## 数据结构

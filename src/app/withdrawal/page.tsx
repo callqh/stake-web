@@ -111,7 +111,7 @@ export default () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className='w-full grid grid-cols-1 gap-6'
+      className='w-full md:w-[50%] grid grid-cols-1 gap-6'
     >
       <motion.div className='grid grid-cols-1 gap-6'>
         <motion.p className='xl:text-4xl sm:text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4 text-center'>
@@ -121,10 +121,10 @@ export default () => {
           Unstake and withdraw your ETH
         </motion.p>
       </motion.div>
-      <Card className='mx-auto grid grid-cols-1 gap-6'>
+      <Card className='mx-auto grid grid-cols-1 gap-6 md:p-12'>
         <div className='grid grid-cols-3 gap-2'>
           {amoutList.map((item) => (
-            <Card className='bg-white p-3' key={item.name}>
+            <Card className='bg-white' key={item.name}>
               <div className='grid grid-rows-2 gap-2'>
                 <p className='text-accent-foreground md:text-nowrap'>
                   {item.name}

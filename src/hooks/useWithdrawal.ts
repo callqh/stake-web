@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
+import { retryWithDelay } from '@/lib/retry';
 import { PID } from '@/lib/utils';
 import type { Address } from '@/types';
 import { useContract } from './useContract';
@@ -23,8 +24,9 @@ export const useWidthdrawal = () => {
   const fetchWidthdrawal = async () => {
     try {
       if (!contract || !address) return;
-      const [requestAmount, withdrawableAmount] =
-        await contract.read.withdrawAmount([PID, address as Address]);
+      const [requestAmount, withdrawableAmount] = await retryWithDelay(() =>
+        contract.read.withdrawAmount([PID, address as Address]),
+      );
       setData({
         requestAmount: requestAmount || BigInt(0),
         withdrawableAmount: withdrawableAmount || BigInt(0),
@@ -37,6 +39,15 @@ export const useWidthdrawal = () => {
 
   useEffect(() => {
     fetchWidthdrawal();
+  }, [contract, address]);
+
+
+  useEffect(() => {
+    if (!contract || !address) return;
+    const tId = setInterval(() => {
+      fetchWidthdrawal();
+    }, 6000)
+    return () => clearInterval(tId)
   }, [contract, address]);
 
   return { data, fetchWidthdrawal };

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
+import { retryWithDelay } from '@/lib/retry';
 import { PID } from '@/lib/utils';
 import type { Address } from '@/types';
 import { useContract } from './useContract';
@@ -27,7 +28,9 @@ export const useUserData = () => {
     }
     try {
       const [stAmount, finishedMetaNode, pendingMetaNode] =
-        await contract.read.user([PID, address as Address]);
+        await retryWithDelay(() =>
+          contract.read.user([PID, address as Address]),
+        );
       setUserData({
         stAmount,
         finishedMetaNode,
@@ -40,7 +43,12 @@ export const useUserData = () => {
   };
 
   useEffect(() => {
+    if (!address || !contract) return;
     fetchUserData();
+    const tId = setInterval(() => {
+      fetchUserData();
+    }, 6000)
+    return () => clearInterval(tId)
   }, [address, contract]);
 
   return { userData, fetchUserData };

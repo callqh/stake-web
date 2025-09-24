@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
+import { retryWithDelay } from '@/lib/retry';
 import { PID } from '@/lib/utils';
 import { useContract } from './useContract';
 
@@ -62,7 +63,7 @@ export const usePool = () => {
         stTokenAmount,
         minDepositAmount,
         unstakeLockedBlocks,
-      ] = await contract.read.pool([PID]);
+      ] = await retryWithDelay(() => contract.read.pool([PID]));
       setPoolData({
         stTokenAddress,
         poolWeight,
@@ -81,5 +82,14 @@ export const usePool = () => {
   useEffect(() => {
     isConnected && fetchPool();
   }, [contract, isConnected]);
+
+  useEffect(() => {
+    if (!isConnected) return;
+    const tId = setInterval(() => {
+      fetchPool();
+    }, 6000)
+    return () => clearInterval(tId)
+  }, [isConnected]);
+
   return { poolData, fetchPool };
 };

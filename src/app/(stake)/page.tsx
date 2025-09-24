@@ -2,7 +2,7 @@
 
 import { Gift, Info, TrendingUp } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { formatEther, parseEther } from 'viem';
 import { useAccount, useBalance, useChainId, useConfig } from 'wagmi';
@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { useContract } from '@/hooks/useContract';
 import { usePool } from '@/hooks/usePool';
 import { useUserData } from '@/hooks/useUserData';
+import { retryWithDelay } from '@/lib/retry';
 import { formatEthFixed, PID } from '@/lib/utils';
 
 export default () => {
@@ -91,6 +92,7 @@ export default () => {
     }
   };
 
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -108,7 +110,7 @@ export default () => {
       <motion.div className='grid xl:grid-cols-2 sm:grid-cols-1 gap-6'>
         <Card
           animationDelay={0.2}
-          className='w-1xl min-w-1xl mx-auto grid grid-cols-1 gap-16'
+          className='w-1xl min-w-1xl mx-auto grid grid-cols-1 gap-16 md:p-12'
         >
           <Card className='border-0 p-6'>
             <div className='flex items-center gap-4'>
