@@ -4,8 +4,6 @@
 3. pid是怎么来的？ /Users/liuqh/lqh/stake-web/src/hooks/useStakingBalance.ts 中通过合约的ETH_PID方法获取pid，这种方法是对的吗
 
 
-
-
 ## 数据结构
 
 ### Pool
@@ -30,3 +28,5 @@
   - withdrawableAmount 可提现的金额
   - withdrawPending 待提现的金额 = requestAmount - withdrawableAmount
 3. 获取奖励的金额
+  - pending rewards 使用user中的第二个变量
+  - claim用来领取奖励

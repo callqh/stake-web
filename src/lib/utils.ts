@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { formatEther } from 'viem';
+import { sepolia } from 'viem/chains';
 import type { Address } from '@/types';
 
 export function cn(...inputs: ClassValue[]) {
@@ -8,6 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const PID = BigInt(0);
+export const chainId = sepolia.id;
 
 export const stTokenAddress = process.env.NEXT_PUBLIC_STAKE_ADDRESS as Address;
 

@@ -37,7 +37,7 @@ export default function Header({
   return (
     <motion.header
       className={cn(
-        'flex w-full border-b border-slate-700/50 sticky top-0 z-50 px-20',
+        'flex w-full border-b border-slate-700/50 sticky top-0 z-50',
         'shadow-lg shadow-slate-900/20 backdrop-blur-xl',
         className,
       )}
@@ -45,8 +45,8 @@ export default function Header({
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-      <div className='w-[80%] mx-auto px-10 sm:px-6 lg:px-8'>
-        <div className='flex justify-around items-center h-16'>
+      <div className='w-full px-10 sm:px-6 lg:px-8'>
+        <div className='w-full flex justify-between items-center h-16'>
           {/* Logo/Title */}
           <motion.div
             className='flex-shrink-0'
@@ -153,7 +153,7 @@ export default function Header({
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className='md:hidden border-t border-slate-700/50 bg-slate-900/98 backdrop-blur-sm'
+              className='absolute top-16 right-1 md:hidden border-t border-slate-700/50 bg-slate-900/98 backdrop-blur-sm px-3 rounded-2xl'
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -161,7 +161,7 @@ export default function Header({
             >
               <motion.div
                 className='py-4 space-y-2'
-                initial={{ y: -20 }}
+                initial={{ y: -10 }}
                 animate={{ y: 0 }}
                 transition={{ delay: 0.1 }}
               >

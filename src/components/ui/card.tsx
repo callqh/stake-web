@@ -19,7 +19,7 @@ export const Card: FC<ICardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: animationDelay }}
       className={cn(
-        'border-[var(--sidebar-senconed)] w-full rounded-3xl border p-12 shadow-2xl',
+        'border-[var(--sidebar-senconed)] w-full rounded-3xl border p-3 md:p-12  shadow-2xl',
         'hover-3d-tilt',
         'bg-grid-animated',
         className,

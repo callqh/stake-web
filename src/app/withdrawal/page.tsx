@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { type Address, formatEther, parseEther } from 'viem';
-import { useAccount, useConfig } from 'wagmi';
+import { useAccount, useChainId, useConfig } from 'wagmi';
 import { waitForTransactionReceipt } from 'wagmi/actions';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -23,6 +23,7 @@ export default () => {
   const { isConnected } = useAccount();
   const contract = useContract();
   const config = useConfig();
+  const chainId = useChainId();
 
   const canWithdraw = useMemo(() => {
     return Number(withdrawal.withdrawableAmount) > 0 && isConnected;
@@ -67,6 +68,7 @@ export default () => {
       if (!res) return;
       const receipt = await waitForTransactionReceipt(config, {
         hash: res as Address,
+        chainId
       });
       if (receipt.status === 'success') {
         toast.success('Unstake success!', {
@@ -90,6 +92,7 @@ export default () => {
       if (!hash) return;
       const receipt = await waitForTransactionReceipt(config, {
         hash: hash as Address,
+        chainId
       });
       if (receipt.status === 'success') {
         toast.success('Withdraw success!', {
@@ -111,10 +114,10 @@ export default () => {
       className='w-full grid grid-cols-1 gap-6'
     >
       <motion.div className='grid grid-cols-1 gap-6'>
-        <motion.p className='text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4 text-center'>
+        <motion.p className='xl:text-4xl sm:text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4 text-center'>
           Withdrawal
         </motion.p>
-        <motion.p className='text-3xl font-bold text-center'>
+        <motion.p className='text-2xl sm:text-3xl font-bold text-center'>
           Unstake and withdraw your ETH
         </motion.p>
       </motion.div>
@@ -123,7 +126,7 @@ export default () => {
           {amoutList.map((item) => (
             <Card className='bg-white p-3' key={item.name}>
               <div className='grid grid-rows-2 gap-2'>
-                <p className='text-accent-foreground text-nowrap'>
+                <p className='text-accent-foreground md:text-nowrap'>
                   {item.name}
                 </p>
                 <p className='text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent'>
