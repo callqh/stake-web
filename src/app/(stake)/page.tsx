@@ -92,7 +92,6 @@ export default () => {
     }
   };
 
-
   return (
     <motion.div
       initial={{ opacity: 0 }}

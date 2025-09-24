@@ -41,13 +41,12 @@ export const useWidthdrawal = () => {
     fetchWidthdrawal();
   }, [contract, address]);
 
-
   useEffect(() => {
     if (!contract || !address) return;
     const tId = setInterval(() => {
       fetchWidthdrawal();
-    }, 6000)
-    return () => clearInterval(tId)
+    }, 6000);
+    return () => clearInterval(tId);
   }, [contract, address]);
 
   return { data, fetchWidthdrawal };

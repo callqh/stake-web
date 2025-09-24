@@ -47,8 +47,8 @@ export const useUserData = () => {
     fetchUserData();
     const tId = setInterval(() => {
       fetchUserData();
-    }, 6000)
-    return () => clearInterval(tId)
+    }, 6000);
+    return () => clearInterval(tId);
   }, [address, contract]);
 
   return { userData, fetchUserData };

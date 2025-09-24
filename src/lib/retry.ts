@@ -9,7 +9,7 @@ export const retryWithDelay = async <T>(
   for (let i = count; i > 0; i--) {
     try {
       const res = await fn();
-      return res
+      return res;
     } catch (error) {
       lastError = error as Error;
       if (error instanceof Error && error.message.includes('429')) {

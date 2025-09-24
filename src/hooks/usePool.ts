@@ -87,8 +87,8 @@ export const usePool = () => {
     if (!isConnected) return;
     const tId = setInterval(() => {
       fetchPool();
-    }, 6000)
-    return () => clearInterval(tId)
+    }, 6000);
+    return () => clearInterval(tId);
   }, [isConnected]);
 
   return { poolData, fetchPool };
